@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from "react";
+
 import "./App.css";
+import "./components/Button"
+import Button from "./components/Button";
+import { ColoredMessage } from "./components/ColoredMessage";
 
 const App = () => {
-  const url = "/users";
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    fetch(url, { method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("err");
-      });
-  }, []);
 
   return (
     <div classname="App">
       <h1>Users</h1>
-      {users.map((user, index) => (
-        <div key={index}>{user.name}</div>
-      ))}
+      <ColoredMessage color="blue">お元気ですか？</ColoredMessage>
+      <ColoredMessage color="pink">元気です</ColoredMessage>
+      <Button></Button>
     </div>
   );
 };
