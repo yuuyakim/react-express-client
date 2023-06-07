@@ -1,18 +1,8 @@
-import React, { useState } from "react";
+import { memo } from "react";
 
-const Button = () => {
-  const [num, setNum] = useState(0);
-
-  const onClickButton = () => {
-    setNum(num + 1);
-  };
+export const Button = memo(({ onClickButton, children }) => {
 
   return (
-    <>
-      <button onClick={onClickButton}>button</button>
-      <p>{num}</p>
-    </>
+      <button onClick={onClickButton}>{children}</button>
   );
-};
-
-export default Button;
+})
