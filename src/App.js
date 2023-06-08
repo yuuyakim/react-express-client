@@ -7,8 +7,10 @@ import { Button } from "./components/Button";
 import { ColoredMessage } from "./components/ColoredMessage";
 import { EditButton } from "./components/EditButton";
 import { SampleContext } from "./components/providers/SampleProvider";
+import { useFetchUsers } from "./hooks/useFetchUsers";
 
 export const App = memo(() => {
+  const { userList, isLoading, isError, onClickFetchUser } = useFetchUsers()
   const { isAdmin, setIsAdmin } = useContext(SampleContext)
   const [num, setNum] = useState(0);
 
@@ -23,7 +25,7 @@ export const App = memo(() => {
   const onClickSwitch = useCallback(() => { setIsAdmin(!isAdmin)})
 
   return (
-    <div classname="App">
+    <div>
       <h1>Users</h1>
       <ColoredMessage color="blue">お元気ですか？</ColoredMessage>
       <ColoredMessage color="pink">元気です</ColoredMessage>
@@ -32,6 +34,15 @@ export const App = memo(() => {
       <Button onClickButton={onClickSwitch}>管理者切り替え</Button>
       <EditButton></EditButton>
       <p>{num}</p>
+      <button onClick={onClickFetchUser}>ユーザー取得</button>
+      {isError && <p style={{ color: "red" }}>エラー発生</p>}
+      {isLoading ? (
+        <p>データ取得中</p>
+      ) : (
+        userList.map(user => (
+          <p key={user.id}>{`${user.id}:${user.name}(${user.age}歳)`}</p>
+        ))
+      )}
     </div>
   );
 })
